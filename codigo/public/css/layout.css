@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300&family=Poppins:wght@400;600&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: rgb(20, 20, 20);
+  font-family: "Poppins", sans-serif;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
+  cursor: default;
+  -webkit-user-select: none;
+  letter-spacing: 0.2vw;
+  text-decoration: none;
+  outline: none;
+  height: 100vh;
+  width: 100vw;
+  overflow-y: auto;
+  background-color: rgb(245, 245, 245);
+}
+
+#menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  position: fixed;
+  left: 0px;
+  padding: 1% 0px;
+  height: 100vh;
+  width: 10vw;
+  background-color: rgb(245, 245, 245);
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  font-size: 1vw;
+}
+#menu #menu-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgb(20, 20, 20);
+  font-family: "Poppins", sans-serif;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
+  cursor: pointer;
+  -webkit-user-select: none;
+  letter-spacing: 0.2vw;
+  text-decoration: none;
+  outline: none;
+  height: 10%;
+  width: 100%;
+}
+#menu #menu-icon i {
+  font-size: 3vw;
+  color: rgb(20, 20, 20);
+  transition: ease-out 0.2s;
+}
+#menu #menu-icon i:hover {
+  color: rgb(30, 145, 105);
+}
+#menu ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-content: flex-start;
+  height: 90%;
+  width: 100%;
+}
+#menu ul li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 10%;
+  width: 100%;
+  margin-top: 10%;
+}
+#menu ul li a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgb(20, 20, 20);
+  font-family: "Poppins", sans-serif;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
+  cursor: pointer;
+  -webkit-user-select: none;
+  letter-spacing: 0.2vw;
+  text-decoration: none;
+  outline: none;
+  height: 100%;
+  width: 100%;
+  transition: 0.1s;
+}
+#menu ul li a:hover {
+  color: rgb(30, 145, 105);
+  transition: 0.1s;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100vh;
+  width: 90vw;
+  margin-left: auto;
+}/*# sourceMappingURL=layout.css.map */

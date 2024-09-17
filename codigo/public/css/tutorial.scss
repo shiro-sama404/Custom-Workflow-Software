@@ -1,0 +1,71 @@
+@import "variables";
+@import "mixins";
+
+header{
+    @include flex-center(row);
+    @include option(default);
+    justify-content: flex-end;
+
+    z-index: 1;
+    position: fixed;
+
+    height: 10vh;
+    width: 100vw;
+    margin-top: 0px;
+
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    background-color: $whiteColor;
+
+    font-size: 2vh;
+
+    #header-item{
+        @include flex-center(row);
+
+        height: 100%;
+        width: 10vw;
+        margin-right: 2vw;
+
+        #user-icon{
+            @include flex-center(row);
+            @include option(pointer);
+            
+            height: 100%;
+            width: 100%;
+        
+            img{height: 90%;}
+        }
+    }       
+}
+
+.section{
+    @include flex-center(column);
+
+    height: auto;
+    width: 90%;
+    margin: 2vh 0px;
+    padding: 1%;
+
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+    &:first-child{
+        margin-top: 11vh;
+    }
+
+    h1{
+        @include option(default);
+
+        font-size: 3vw;
+        font-weight: bold;
+
+        margin-bottom: 5%;
+    }
+
+    div{
+        @include option(default);
+
+        font-size: 1vw;
+        text-align: justify;
+
+        margin-bottom: 2%;
+    }
+}

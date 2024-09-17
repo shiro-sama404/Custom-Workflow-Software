@@ -1,0 +1,100 @@
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: rgb(20, 20, 20);
+  font-family: "Poppins", sans-serif;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
+  cursor: default;
+  -webkit-user-select: none;
+  letter-spacing: 0.2vw;
+  text-decoration: none;
+  outline: none;
+  justify-content: flex-end;
+  z-index: 1;
+  position: fixed;
+  height: 10vh;
+  width: 100vw;
+  margin-top: 0px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  background-color: rgb(245, 245, 245);
+  font-size: 2vh;
+}
+header #header-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 10vw;
+  margin-right: 2vw;
+}
+header #header-item #user-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: rgb(20, 20, 20);
+  font-family: "Poppins", sans-serif;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
+  cursor: pointer;
+  -webkit-user-select: none;
+  letter-spacing: 0.2vw;
+  text-decoration: none;
+  outline: none;
+  height: 100%;
+  width: 100%;
+}
+header #header-item #user-icon img {
+  height: 90%;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  width: 90%;
+  margin: 2vh 0px;
+  padding: 1%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+.section:first-child {
+  margin-top: 11vh;
+}
+.section h1 {
+  color: rgb(20, 20, 20);
+  font-family: "Poppins", sans-serif;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
+  cursor: default;
+  -webkit-user-select: none;
+  letter-spacing: 0.2vw;
+  text-decoration: none;
+  outline: none;
+  font-size: 3vw;
+  font-weight: bold;
+  margin-bottom: 5%;
+}
+.section div {
+  color: rgb(20, 20, 20);
+  font-family: "Poppins", sans-serif;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
+  cursor: default;
+  -webkit-user-select: none;
+  letter-spacing: 0.2vw;
+  text-decoration: none;
+  outline: none;
+  font-size: 1vw;
+  text-align: justify;
+  margin-bottom: 2%;
+}/*# sourceMappingURL=tutorial.css.map */

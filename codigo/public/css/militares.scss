@@ -1,0 +1,324 @@
+@import "variables";
+@import "mixins";
+
+header{
+    @include flex-center(row);
+    @include option(default);
+
+    justify-content: flex-end;
+    z-index: 3;
+    position: fixed;
+    top: 0;
+
+    height: 10vh;
+    width: 85.5%;
+    margin-right: 2vw;
+
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 25px 20px -20px;
+    font-size: 2vh;
+
+    ul{
+        
+        @include flex-center(row);
+        justify-content: flex-end;
+
+        height: 100%;
+        width: 100%;
+
+        li{
+            @include flex-center(column);
+            @include option(pointer);
+
+            height: 100%;
+            width: 10vw;
+            margin-right: 2vw;
+            transition: 0.2s;
+            
+            a{
+                @include flex-center(column);
+                text-decoration: none;
+                text-align: center;
+                color: inherit;
+                height: 100%;
+                width: 100%;
+                padding: 0px 1%;
+            }
+
+            &:hover{
+                color: $primaryColor;
+                transition: 0.1s;
+            }
+
+            &:last-child{
+                cursor: default;
+            }
+
+            #enable-filter{
+                @include flex-center(row);
+                @include option(pointer);
+
+                justify-content: space-between;
+
+                height: 100%;
+                width: 6vw;
+                padding: 0px 1%;
+                margin-right: 2%;
+
+                transition: ease-out .2s;
+
+                &:hover{
+                    color: $primaryColor;
+                }
+
+                p{
+                    margin-right: 5%;
+                }
+
+                #arrow-up{
+                    display: none;
+                }
+            }
+
+            #user-icon{
+                @include flex-center(column);
+                @include option(pointer);
+                align-items:center;
+            
+                height: 100%;
+                width: auto;
+            
+                img{height: 90%;}
+            }
+        }
+    }
+}
+
+#filter-bar{
+    z-index: 3;
+    display: none;
+    visibility: hidden;
+    position: fixed;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+
+    height: 10vh;
+    width: 85.5%;
+    top: 10vh;
+    margin-right: 2vw;
+
+    background-color: $whiteColor;
+    box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
+
+    font-size: 1vw;
+}
+
+.filter-option{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+    width: 15%;
+    margin-right: 1%;
+}
+
+#categoria-filter{
+    justify-content: space-around;
+    width: 8%;
+}
+
+.container {
+    @include flex-center(row);
+    @include option(pointer);
+
+    justify-content: flex-start;
+    position: relative;
+
+    width: 100%;
+    height: 30%;
+
+    input{
+        opacity: 0;
+        height: 0;
+        width: 0;
+        margin-right: 30%;
+    }
+}
+  
+.checkmark {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 20%;
+    border: .1vw solid $primaryColor;
+}
+  
+.container:hover input ~ .checkmark {
+    background-color: $gray;
+}
+  
+.container input:checked ~ .checkmark {background-color: $primaryColor;}
+  
+.checkmark:after {
+    content: "";
+    position: absolute;
+    visibility: hidden;
+}
+  
+.container input:checked ~ .checkmark:after {visibility: visible;}
+  
+.container .checkmark:after {
+    left: 40%;
+    top: 0%;
+    width: 20%;
+    height: 80%;
+    border: solid white;
+    border-width: 0 .1vw .1vw 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.filter-button{
+    @include flex-center(column);
+    @include option(pointer);
+
+    height: 70%;
+    width: 9%;
+    margin: 0px 2.2%;
+
+    border-radius: 1vh;
+    border: .2vw solid $primaryColor;
+
+    transition: .2s;
+
+    &:hover{
+        color: white;
+    background-color: $primaryColor;
+
+    transition: .2s;
+    }
+}
+
+input[type="text"]{
+    @include option(text);
+
+    height: 40%;
+    width: 80%;
+    padding-left: 1%;
+
+    transition: .2s;
+
+    &:hover{
+        transition: .2s;
+        width: 90%;
+    }
+}
+
+#table-container {
+    margin: 12vh 0px 0px 0px;
+    height: 85vh;
+    width: 95%;
+    margin-right: 2vw;
+
+    border-radius: 1%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+    #table {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+
+        #table-body {
+            display: flex;
+            flex-direction: column;
+
+            height: 100%;
+            width: 100%;
+            overflow: auto;
+
+            #table-head {
+                display: flex;
+                white-space: nowrap;
+                position: sticky;
+                top: 0;
+                z-index: 2;
+
+                height: 50px;
+                width: auto;
+
+                background-color: $whiteColor;
+            
+                .table-header {
+                    display: flex;
+                    flex-shrink: 0;
+                    align-items: center;
+                    justify-content: center;
+
+                    width: max-content;
+                    min-width: 200px;
+                    height: 100%;
+                    padding: 0px 10px;
+                    
+                    border: 1px solid $gray;
+                    background-color: $whiteColor;
+
+                    &.active {
+                        background-color: $gray;
+                    }
+
+                    i{
+                        margin-left: 5px;
+                    }
+                }
+            }
+
+            .table-row {
+                display: flex;
+
+                height: 100px;
+                width: max-content;
+                min-width: 100%;
+
+                &:first-child{
+                    margin-top: 100px;
+                }
+
+                .table-fixed {
+
+                    @include flex-center(column);
+
+                    position: sticky;
+                    left: 0;
+                    z-index: 1;
+
+                    width: 200px;
+                    height: 100px;
+
+                    border: 1px solid $primaryColor;
+                    background-color: $whiteColor;
+
+                    &.active{
+                        transition: ease-out .2s;
+                        color: $whiteColor;
+                        background-color: $primaryColor;
+                    }
+                }
+
+                .table-content {
+                    @include flex-center(column);
+
+                    width: 200px;
+                    height: 100px;
+                    border: 1px solid $gray;
+                    background-color: $whiteColor;
+                }
+            }
+        }
+    }
+}
