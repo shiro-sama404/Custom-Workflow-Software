@@ -1,0 +1,101 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(245, 245, 245);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  width: 40vw;
+  padding: 1%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  background-color: rgb(245, 245, 245);
+}
+
+#user-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-items: center;
+  height: 30%;
+  width: 100%;
+  margin-top: 10%;
+}
+#user-icon img {
+  height: 100%;
+}
+
+#login-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-items: center;
+  height: 60%;
+  width: 100%;
+}
+#login-info input {
+  color: rgb(20, 20, 20);
+  font-family: "Poppins", sans-serif;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
+  cursor: pointer;
+  -webkit-user-select: none;
+  letter-spacing: 0.2vw;
+  text-decoration: none;
+  outline: none;
+  height: 15%;
+  width: 80%;
+  border: 1px solid rgb(30, 145, 105);
+  border-radius: 1%;
+  outline: none;
+  margin-bottom: 3%;
+  text-align: center;
+  text-decoration: none;
+  transition: ease 0.2s;
+  width: 70%;
+}
+#login-info input:hover {
+  cursor: pointer;
+  width: 85%;
+  transition: 0.2s;
+}
+
+button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgb(20, 20, 20);
+  font-family: "Poppins", sans-serif;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
+  cursor: pointer;
+  -webkit-user-select: none;
+  letter-spacing: 0.2vw;
+  text-decoration: none;
+  outline: none;
+  font-weight: bold;
+  height: 20%;
+  width: 50%;
+  margin-top: 5%;
+  border-radius: 1vh;
+  border: 0.2vw solid rgb(30, 145, 105);
+  transition: 0.2s;
+}
+button:hover {
+  color: white;
+  background-color: rgb(30, 145, 105);
+  transition: ease 0.2s;
+}/*# sourceMappingURL=login.css.map */
