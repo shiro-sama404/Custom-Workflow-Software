@@ -3,7 +3,7 @@ Requisitos para rodar o protótipo:
 Acessar o diretório da pasta protótipo e instalar:
 - https://nodejs.org/en/download/prebuilt-installer
 - npm install express --save
-- nom install --save express-handlebars
+- npm install --save express-handlebars
 
 Opcional:
-- nom install nodemon -g
+- npm install nodemon -g
