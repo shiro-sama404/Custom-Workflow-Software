@@ -15,19 +15,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Escala {
+public class Administrator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int     id;
-    private String  nome;
-    private int     grupo;
-    private int     idOrganizacao;
-    private boolean bloqueioTotal;
-    private int[]   idEscalasBloqueadas;
-    private int     intervaloDias;
-    private int     duracaoDias;
-    private int     efetivo;
-    private int[]   idEfetivo;
-    private boolean ativa;
+    private int id;
+    private String user;
+    private String password; 
 }
