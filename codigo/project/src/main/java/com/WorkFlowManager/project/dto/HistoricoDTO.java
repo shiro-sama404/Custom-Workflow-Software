@@ -4,8 +4,9 @@ import java.time.LocalDate;
 
 public record HistoricoDTO
 (
-    int       idMilitar,
-    int       idEscala,
+    Long      id,
+    Long      idMilitar,
+    Long      idEscala,
     LocalDate dataInicio,
     LocalDate dataFim
 ) {}

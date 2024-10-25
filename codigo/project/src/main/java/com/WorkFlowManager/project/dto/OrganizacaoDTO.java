@@ -2,9 +2,8 @@ package com.WorkFlowManager.project.dto;
 
 public record OrganizacaoDTO
 (
-    int id,
-    int[] idSubOrganizacoes,
-
+    Long id,
+    Long[] idSubOrganizacoes,
     String nome,
     String abreviacao
 ) {}

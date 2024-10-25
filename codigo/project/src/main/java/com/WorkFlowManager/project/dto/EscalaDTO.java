@@ -2,15 +2,16 @@ package com.WorkFlowManager.project.dto;
 
 public record EscalaDTO
 (
-    int     id,
+    Long    id,
     String  nome,
+    Long    idOrganizacao,
+    Long[]  idEscalasBloqueadas,
+    Long[]  idEfetivo,
+    int     efetivo,
     int     grupo,
-    int     idOrganizacao,
-    boolean bloqueioTotal,
-    int[]   idEscalasBloqueadas,
     int     intervaloDias,
     int     duracaoDias,
-    int     efetivo,
-    int[]   idEfetivo,
+    boolean pretaVermelha,
+    boolean bloqueioTotal,
     boolean ativa
 ) {}

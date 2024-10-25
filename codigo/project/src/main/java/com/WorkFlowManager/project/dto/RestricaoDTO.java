@@ -4,11 +4,13 @@ import java.time.LocalDate;
 
 public record RestricaoDTO
 (
-    int     idMilitar,
-    boolean restricaoTotal,
-    int[]   idEscalasBloqueadas,
-    String  detalhes,
+    Long      id,
+    Long      idMilitar,
+    Long      idUser,
+    Long[]    idEscalasBloqueadas,
+    String    razao,
+    String    detalhes,
     LocalDate dataInicio,
     LocalDate dataFim,
-    String    razao
+    boolean   restricaoTotal
 ) {}

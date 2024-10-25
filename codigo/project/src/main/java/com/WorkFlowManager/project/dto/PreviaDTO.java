@@ -3,8 +3,12 @@ package com.WorkFlowManager.project.dto;
 import java.time.LocalDate;
 
 public record PreviaDTO(
-    int       idMilitar,
-    int       idEscala,
+    Long      id,
+    Long      idMilitar,
+    Long      idEscala,
+    Long      idUser,
     LocalDate dataInicio,
-    LocalDate dataFim
+    LocalDate dataFim,
+    boolean   rascunho,
+    boolean   confirmada
 ) {}

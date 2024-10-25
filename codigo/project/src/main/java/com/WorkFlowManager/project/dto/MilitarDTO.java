@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public record MilitarDTO
 (
-    int       id,
+    Long      id,
     String    identidade,
     String    nomeComplemento,
     LocalDate dataNascimento,

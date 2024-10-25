@@ -5,14 +5,21 @@ import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
 public class Organizacao {
-    private int id;
-    private int[] idSubOrganizacoes;
-
-    public String nome;
-    public String abreviacao;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Long[] idSubOrganizacoes;
+    private String nome;
+    private String abreviacao;
 }

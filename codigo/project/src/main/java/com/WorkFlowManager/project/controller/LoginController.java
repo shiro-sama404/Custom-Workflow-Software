@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class LoginControler {
+public class LoginController {
     
     @GetMapping("/login")
     public String getLogin(){

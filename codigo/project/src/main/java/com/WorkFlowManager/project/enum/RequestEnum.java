@@ -1,4 +1,0 @@
-enum RequestEnum {
-    SUCCESS,
-    FAIL
-}

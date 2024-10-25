@@ -1,30 +1,37 @@
 package com.WorkFlowManager.project.model;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
 public class Militar {
-    private int       id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long      id;
     private String    identidade;
-    private String    nomeComplemento;
-    private LocalDate dataNascimento;
+    private String    nomeCompleto;
+    private String    nomeGuerra;
+    private String    postoGraduacao;
+    private String    qas;
     private String    habilitacao;
     private int       antiguidade;
     private int       idOrganizacao;
+    private LocalDate dataNascimento;
+    private LocalDate dataPraca;
+    private LocalDate dataPromocao;
+    private boolean   cfcCasCao;
     private boolean   ativo;
-
-    public String    nomeGuerra;
-    public String    postoGraduacao;
-    public String    qas;
-    public LocalDate dataPraca;
-    public LocalDate dataPromocao;
-    public boolean   cfcCasCao;
 }
