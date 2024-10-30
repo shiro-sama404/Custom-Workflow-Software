@@ -1,15 +1,18 @@
 package com.WorkFlowManager.project.service;
 
-import java.util.Optional;
+import com.WorkFlowManager.project.dto.PreviaDTO;
+import com.WorkFlowManager.project.exception.ResourceNotFoundException;
+import com.WorkFlowManager.project.model.Escala;
+import com.WorkFlowManager.project.model.Militar;
+import com.WorkFlowManager.project.model.Previa;
+import com.WorkFlowManager.project.model.Usuario;
+import com.WorkFlowManager.project.repository.PreviaRepository;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.WorkFlowManager.project.dto.PreviaDTO;
-import com.WorkFlowManager.project.exception.ResourceNotFoundException;
-import com.WorkFlowManager.project.model.Previa;
-import com.WorkFlowManager.project.repository.PreviaRepository;
-
+@Service
 public class PreviaService {
     
     private final PreviaRepository previaRepository;
@@ -18,31 +21,35 @@ public class PreviaService {
         this.previaRepository = previaRepository;
     }
 
-    public Optional<Previa> getRascunho(long userID, Long escalaId) {
-        return previaRepository.findByEscalaIdAndUsuarioIdAndRascunho(userID, escalaId, true);
-    }
-
     public Previa getPreviaById(@PathVariable Long id) throws ResourceNotFoundException {
-        return previaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("previa não encontrada com id: " + id));
+        return previaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("previa não encontrada. id: " + id));
     }
 
-    public Previa createPrevia(@RequestBody Previa previa) {
-        return previaRepository.save(previa);
+    public Previa createPrevia(@RequestBody PreviaDTO previaDetails, Escala escala, Militar militar, Usuario usuario) {
+
+        Previa novaPrevia = Previa.builder()
+            .status    (previaDetails.status()    )
+            .escala    (escala                    )
+            .militar   (militar                   )
+            .usuario   (usuario                   )
+            .dataInicio(previaDetails.dataInicio())
+            .dataFim   (previaDetails.dataFim()   )
+            .build();
+
+        return previaRepository.save(novaPrevia);
     }
 
-    public Previa updatePrevia(@PathVariable Long id, @RequestBody PreviaDTO previaDetails) {
+    public Previa updatePrevia(@PathVariable Long id, @RequestBody PreviaDTO previaDetails, Escala escala, Militar militar, Usuario usuario) {
 
         Previa previa = previaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("previa não encontrada com id: " + id));
+            .orElseThrow(() -> new ResourceNotFoundException("previa não encontrada. id: " + id));
         
-        previa.setId(previaDetails.id());
-        previa.setIdMilitar(previaDetails.idMilitar());
-        previa.setIdEscala(previaDetails.idEscala());
-        previa.setIdUser(previaDetails.idUser());
-        previa.setDataInicio(previaDetails.dataInicio());
-        previa.setDataFim(previaDetails.dataFim());
-        previa.setRascunho(previaDetails.rascunho());
-        previa.setConfirmada(previaDetails.confirmada());
+        previa.setStatus       (previaDetails.status()    );
+        previa.setMilitar      (militar                   );
+        previa.setEscala       (escala                    );
+        previa.setUsuario      (usuario                   );
+        previa.setDataInicio   (previaDetails.dataInicio());
+        previa.setDataFim      (previaDetails.dataFim()   );
 
         return previaRepository.save(previa);
     }

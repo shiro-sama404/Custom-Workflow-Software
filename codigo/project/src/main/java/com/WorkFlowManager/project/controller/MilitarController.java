@@ -1,5 +1,11 @@
 package com.WorkFlowManager.project.controller;
 
+import com.WorkFlowManager.project.dto.MilitarDTO;
+import com.WorkFlowManager.project.model.Militar;
+import com.WorkFlowManager.project.model.Organizacao;
+import com.WorkFlowManager.project.service.MilitarService;
+import com.WorkFlowManager.project.service.OrganizacaoService;
+
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -11,18 +17,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.WorkFlowManager.project.dto.MilitarDTO;
-import com.WorkFlowManager.project.model.Militar;
-import com.WorkFlowManager.project.service.MilitarService;
-
 @Controller
-@RequestMapping("/edit/militares")
+@RequestMapping("/militares")
 public class MilitarController {
 
     private final MilitarService militarService;
+    private final OrganizacaoService organizacaoService;
 
-    public MilitarController(MilitarService militarService) {
+    public MilitarController(MilitarService militarService, OrganizacaoService organizacaoService) {
         this.militarService = militarService;
+        this.organizacaoService = organizacaoService;
     }
 
     @GetMapping
@@ -36,13 +40,19 @@ public class MilitarController {
     }
 
     @PostMapping
-    public Militar createMilitar(@RequestBody Militar militar) {
-        return militarService.createMilitar(militar);
+    public Militar createMilitar(@RequestBody MilitarDTO militarDetails) {
+        
+        Organizacao organizacao = organizacaoService.getOrganizacaoById(militarDetails.idOrganizacao());
+
+        return militarService.createMilitar(militarDetails, organizacao);
     }
 
     @PutMapping("/{id}")
-    public Militar updateMilitar(@PathVariable Long id, @RequestBody MilitarDTO militar) {
-        return militarService.updateMilitar(id, militar);
+    public Militar updateMilitar(@PathVariable Long id, @RequestBody MilitarDTO militarDetails) {
+
+        Organizacao organizacao = organizacaoService.getOrganizacaoById(militarDetails.idOrganizacao());
+
+        return militarService.updateMilitar(id, militarDetails, organizacao);
     }
 
     @DeleteMapping("/{id}")

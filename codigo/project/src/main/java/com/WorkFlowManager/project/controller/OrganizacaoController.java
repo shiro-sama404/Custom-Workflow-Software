@@ -1,5 +1,9 @@
 package com.WorkFlowManager.project.controller;
 
+import com.WorkFlowManager.project.dto.OrganizacaoDTO;
+import com.WorkFlowManager.project.model.Organizacao;
+import com.WorkFlowManager.project.service.OrganizacaoService;
+
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -11,12 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.WorkFlowManager.project.dto.OrganizacaoDTO;
-import com.WorkFlowManager.project.model.Organizacao;
-import com.WorkFlowManager.project.service.OrganizacaoService;
-
 @Controller
-@RequestMapping("/edit/organizacao")
+@RequestMapping("/organizacoes")
 public class OrganizacaoController {
 
     private final OrganizacaoService organizacaoService;
@@ -36,13 +36,13 @@ public class OrganizacaoController {
     }
 
     @PostMapping
-    public Organizacao createOrganizacao(@RequestBody Organizacao organizacao) {
-        return organizacaoService.createOrganizacao(organizacao);
+    public Organizacao createOrganizacao(@RequestBody OrganizacaoDTO organizacaoDTO) {
+        return organizacaoService.createOrganizacao(organizacaoDTO);
     }
 
     @PutMapping("/{id}")
-    public Organizacao updateOrganizacao(@PathVariable Long id, @RequestBody OrganizacaoDTO organizacao) {
-        return organizacaoService.updateOrganizacao(id, organizacao);
+    public Organizacao updateOrganizacao(@PathVariable Long id, @RequestBody OrganizacaoDTO organizacaoDTO) {
+        return organizacaoService.updateOrganizacao(id, organizacaoDTO);
     }
 
     @DeleteMapping("/{id}")

@@ -1,6 +1,6 @@
 package com.WorkFlowManager.project.enums;
 
-public enum PostoGraduacaoExercito {
+public enum PostoGraduacao {
     SOLDADO,
     TAIFEIRO_SEGUNDA_CLASSE,
     TAIFEIRO_PRIMEIRA_CLASSE,

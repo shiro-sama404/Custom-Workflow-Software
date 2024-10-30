@@ -11,5 +11,5 @@ import com.WorkFlowManager.project.model.Previa;
 @Repository
 public interface PreviaRepository extends JpaRepository<Previa, Long> {
     
-    Optional<Previa> findByEscalaIdAndUsuarioIdAndRascunho(Long escalaId, Long usuarioId, boolean rascunho);
+    Optional<Previa> findByIdEscalaAndIdUserAndRascunho(Long escalaId, Long usuarioId, boolean rascunho);
 }

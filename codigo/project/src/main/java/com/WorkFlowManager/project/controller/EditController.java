@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/edit")
+@RequestMapping("/edit-menu")
 public class EditController {
 
     @GetMapping
     public String getEditOptionsPage() {
-        return "edit";
+        return "menu";
     }
 }

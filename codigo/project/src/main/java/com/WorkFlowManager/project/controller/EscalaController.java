@@ -1,5 +1,16 @@
 package com.WorkFlowManager.project.controller;
 
+import com.WorkFlowManager.project.dto.EscalaDTO;
+import com.WorkFlowManager.project.model.Escala;
+import com.WorkFlowManager.project.model.Militar;
+import com.WorkFlowManager.project.model.Organizacao;
+import com.WorkFlowManager.project.service.EscalaService;
+import com.WorkFlowManager.project.service.MilitarService;
+import com.WorkFlowManager.project.service.OrganizacaoService;
+
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,20 +20,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
-import com.WorkFlowManager.project.dto.EscalaDTO;
-import com.WorkFlowManager.project.model.Escala;
-import com.WorkFlowManager.project.service.EscalaService;
-
 @Controller
-@RequestMapping("/edit/escala")
+@RequestMapping("/escala")
 public class EscalaController {
 
     private final EscalaService escalaService;
+    private final MilitarService militarService;
+    private final OrganizacaoService organizacaoService;
 
-    public EscalaController(EscalaService escalaService) {
+    public EscalaController(EscalaService escalaService, MilitarService militarService, OrganizacaoService organizacaoService) {
         this.escalaService = escalaService;
+        this.militarService = militarService;
+        this.organizacaoService = organizacaoService;
     }
 
     @GetMapping
@@ -36,13 +45,17 @@ public class EscalaController {
     }
 
     @PostMapping
-    public Escala createEscala(@RequestBody Escala escala) {
-        return escalaService.createEscala(escala);
+    public Escala createEscala(@RequestBody EscalaDTO escalaDetails) {
+        Set<Militar> militares = militarService.getMilitaresById(escalaDetails.idMilitares());
+        Organizacao organizacao = organizacaoService.getOrganizacaoById(escalaDetails.idOrganizacao());
+        return escalaService.createEscala(escalaDetails, militares, organizacao);
     }
 
     @PutMapping("/{id}")
-    public Escala updateEscala(@PathVariable Long id, @RequestBody EscalaDTO escala) {
-        return escalaService.updateEscala(id, escala);
+    public Escala updateEscala(@PathVariable Long id, @RequestBody EscalaDTO escalaDetails) {
+        Set<Militar> militares = militarService.getMilitaresById(escalaDetails.idMilitares());
+        Organizacao organizacao = organizacaoService.getOrganizacaoById(escalaDetails.idOrganizacao());
+        return escalaService.updateEscala(id, escalaDetails, militares, organizacao);
     }
 
     @DeleteMapping("/{id}")

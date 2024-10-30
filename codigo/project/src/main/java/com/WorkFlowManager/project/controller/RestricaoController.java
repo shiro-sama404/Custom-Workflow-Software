@@ -1,6 +1,17 @@
 package com.WorkFlowManager.project.controller;
 
+import com.WorkFlowManager.project.dto.RestricaoDTO;
+import com.WorkFlowManager.project.model.Escala;
+import com.WorkFlowManager.project.model.Militar;
+import com.WorkFlowManager.project.model.Restricao;
+import com.WorkFlowManager.project.model.Usuario;
+import com.WorkFlowManager.project.service.EscalaService;
+import com.WorkFlowManager.project.service.MilitarService;
+import com.WorkFlowManager.project.service.RestricaoService;
+import com.WorkFlowManager.project.service.UsuarioService;
+
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,18 +22,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.WorkFlowManager.project.dto.RestricaoDTO;
-import com.WorkFlowManager.project.model.Restricao;
-import com.WorkFlowManager.project.service.RestricaoService;
-
 @Controller
-@RequestMapping("/edit/restricoes")
+@RequestMapping("/restricoes")
 public class RestricaoController {
 
     private final RestricaoService restricaoService;
+    private final MilitarService militarService;
+    private final EscalaService escalaService;
+    private final UsuarioService usuarioService;
 
-    public RestricaoController(RestricaoService restricaoService) {
+    public RestricaoController(RestricaoService restricaoService, MilitarService militarService, EscalaService escalaService, UsuarioService usuarioService) {
         this.restricaoService = restricaoService;
+        this.militarService = militarService;
+        this.escalaService = escalaService;
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping
@@ -36,13 +49,23 @@ public class RestricaoController {
     }
 
     @PostMapping
-    public Restricao createrestricao(@RequestBody Restricao restricao) {
-        return restricaoService.createRestricao(restricao);
+    public Restricao createrestricao(@RequestBody RestricaoDTO restricaoDetails) {
+
+        Set<Escala> escalasBloqueadas = escalaService.getEscalasById(restricaoDetails.idsEscalasBloqueadas());
+        Militar militar = militarService.getMilitarById(restricaoDetails.idMilitar());
+        Usuario usuarioAutor = usuarioService.getUsuarioById(restricaoDetails.idUsuario());
+    
+        return restricaoService.createRestricao(restricaoDetails, escalasBloqueadas, militar, usuarioAutor);
     }
 
     @PutMapping("/{id}")
-    public Restricao updaterestricao(@PathVariable Long id, @RequestBody RestricaoDTO restricao) {
-        return restricaoService.updateRestricao(id, restricao);
+    public Restricao updaterestricao(@PathVariable Long id, @RequestBody RestricaoDTO restricaoDetails) {
+
+        Set<Escala> escalasBloqueadas = escalaService.getEscalasById(restricaoDetails.idsEscalasBloqueadas());
+        Militar militar = militarService.getMilitarById(restricaoDetails.idMilitar());
+        Usuario usuarioAutor = usuarioService.getUsuarioById(restricaoDetails.idUsuario());
+
+        return restricaoService.updateRestricao(id, restricaoDetails, escalasBloqueadas, militar, usuarioAutor);
     }
 
     @DeleteMapping("/{id}")

@@ -1,11 +1,16 @@
 package com.WorkFlowManager.project.model;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.WorkFlowManager.project.enums.Role;
 
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -17,32 +22,22 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
-
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-public class User {
+public class Usuario {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long idOrganizacao;
-    private String username;
-    private String passwordHash;
-    private String salt;  // Salt para a senha
-    private String nomeCompleto;
-    private String email;
-    private int telefone;
-    private int tentativasFalhasLogin;
-    private LocalDateTime dataCriacao;
-    private LocalDateTime dataUltimoLogin;
-    private Boolean contaAtiva;
+
+    @ManyToOne
+    @JoinColumn(name = "id_organizacao")
+    private Organizacao organizacao;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
@@ -51,6 +46,16 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "militar_id")
     private Militar militar;
+
+    private String username;
+    private String passwordHash;
+    private String salt;  // para a senha
+    private String email;
+    private int telefone;
+    private int tentativasFalhasLogin;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime dataUltimoLogin;
+    private boolean ativo;
 
     public Set<Role> getAuthorities() {
         return roles.stream().collect(Collectors.toSet());
