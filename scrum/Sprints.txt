@@ -1,0 +1,32 @@
+Sprint 23/09 - 07/10:
+
+- Elaboração README 1.0 ✓
+- Diagrama de atividades ✓
+- Diagrama de casos de uso ✓
+- Configuração e estudo do Spring Boot ✓
+- Desenvolvimento de pseudocódigo + diagramas da lógica de escalas ✓
+
+Sprint 08/10 - 21/10:
+
+- Subir projeto Maven no GitHub ✓
+- Configuração das rotas (controllers) ✓
+- Configuração do Banco de Dados ✓
+- Operações de inserção manual de dados (back-end ✓ | front-end ✗)
+
+Sprint: 22/10 - 04/11:
+
+- Reescrever a modelagem da escala e regras de serviço relacionadas para repasse ao LEXA ✓
+- Finalização do Front-end
+- Operações de visualização de dados (CRUD) ✓
+- Operações de edição de dados (CRUD)
+- Operações de exclusão de dados (CRUD)
+- Finalização do sistema de Login
+
+Sprint 05/11 - 18/11:
+
+- Finalização do sistema de histórico de prévias
+- Finalização do sistema de registro de logs
+- Testes de CRUD
+- Testes de Segurança
+- Testes de Performance
+- Apresentação do produto e resultados 14/11
