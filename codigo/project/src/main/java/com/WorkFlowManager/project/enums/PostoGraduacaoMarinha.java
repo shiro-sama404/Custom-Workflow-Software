@@ -1,0 +1,21 @@
+package com.WorkFlowManager.project.enums;
+
+public enum PostoGraduacaoMarinha {
+    MARINHEIRO,
+    CABO,
+    TERCEIRO_SARGENTO,
+    SEGUNDO_SARGENTO,
+    PRIMEIRO_SARGENTO,
+    SUBOFICIAL,
+    GUARDA_MARINHA,
+    SEGUNDO_TENENTE,
+    PRIMEIRO_TENENTE,
+    CAPITÃO_TENENTE,
+    CAPITÃO_DE_CORVETA,
+    CAPITÃO_DE_FRAGATA,
+    CAPITÃO_DE_MAR_E_GUERRA,
+    CONTRA_ALMIRANTE,
+    VICE_ALMIRANTE,
+    ALMIRANTE_DE_ESQUADRA,
+    ALMIRANTE
+}

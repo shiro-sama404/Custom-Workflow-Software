@@ -1,0 +1,17 @@
+package com.WorkFlowManager.project.repository;
+
+import com.WorkFlowManager.project.enums.PreviaStatus;
+import com.WorkFlowManager.project.model.Previa;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface PreviaRepository extends JpaRepository<Previa, Long>, JpaSpecificationExecutor<Previa> {
+    
+    List<Previa> findByIdEscalaAndIdUsuarioAndStatus(Long escalaId, Long usuarioId, PreviaStatus status);
+   List<Previa> findByIdEscala(Long escalaId);
+}
