@@ -36,6 +36,10 @@ public class Usuario {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "militar_id")
+    private Militar militar;
+
+    @ManyToOne
     @JoinColumn(name = "id_organizacao")
     private Organizacao organizacao;
 
@@ -43,21 +47,18 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @ManyToOne
-    @JoinColumn(name = "militar_id")
-    private Militar militar;
-
-    private String username;
-    private String passwordHash;
-    private String salt;  // para a senha
-    private String email;
-    private int telefone;
-    private int tentativasFalhasLogin;
+    private String        username;
+    private String        passwordHash;
+    private String        email;
+    private int           telefone;
+    private int           tentativasFalhasLogin;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataUltimoLogin;
-    private boolean ativo;
+    private boolean       ativo;
 
     public Set<Role> getAuthorities() {
-        return roles.stream().collect(Collectors.toSet());
+        return roles
+            .stream()
+            .collect(Collectors.toSet());
     }
 }

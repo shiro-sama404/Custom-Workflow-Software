@@ -19,16 +19,31 @@ public record PreviaDTO
     PreviaStatus status
 ) {
 
-    public static PreviaDTO publicDTO(Previa previa, Long idEscala, Long idMilitar, Long idUsuario){
+    public static PreviaDTO publicDTO(Previa previa){
 
         PreviaDTO previaDetails = PreviaDTO.builder()
-            .id(previa.getId())
-            .idEscala(idEscala)
-            .idMilitar(idMilitar)
-            .idUsuario(idUsuario)
-            .dataInicio(previa.getDataInicio())
-            .dataFim(previa.getDataFim())
-            .status(previa.getStatus())
+            .id        (previa.getId()             )
+            .idEscala  (previa.getEscala().getId() )
+            .idMilitar (previa.getMilitar().getId())
+            .idUsuario (previa.getUsuario().getId())
+            .dataInicio(previa.getDataInicio()     )
+            .dataFim   (previa.getDataFim()        )
+            .status    (previa.getStatus()         )
+            .build();
+
+        return previaDetails;
+    }
+
+    public static PreviaDTO publicDTO(Long id, Long idEscala, Long idMilitar, Long idUsuario, LocalDate dataInicio, LocalDate dataFim, PreviaStatus status){
+
+        PreviaDTO previaDetails = PreviaDTO.builder()
+            .id        (id        )
+            .idEscala  (idEscala  )
+            .idMilitar (idMilitar )
+            .idUsuario (idUsuario )
+            .dataInicio(dataInicio)
+            .dataFim   (dataFim   )
+            .status    (status    )
             .build();
 
         return previaDetails;

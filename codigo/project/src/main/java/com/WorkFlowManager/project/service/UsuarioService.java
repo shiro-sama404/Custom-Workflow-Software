@@ -5,15 +5,14 @@ import com.WorkFlowManager.project.exception.ResourceNotFoundException;
 import com.WorkFlowManager.project.model.Militar;
 import com.WorkFlowManager.project.model.Organizacao;
 import com.WorkFlowManager.project.model.Usuario;
+import com.WorkFlowManager.project.repository.MilitarRepository;
+import com.WorkFlowManager.project.repository.OrganizacaoRepository;
 import com.WorkFlowManager.project.repository.UsuarioRepository;
 
 import java.time.LocalDateTime;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,14 +20,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
-public class UsuarioService implements UserDetailsService {
+public class UsuarioService{
     
-    private final UsuarioRepository usuarioRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UsuarioRepository     usuarioRepository;
+    private final PasswordEncoder       passwordEncoder;
+    private final OrganizacaoRepository organizacaoRepository;
+    private final MilitarRepository     militarRepository;
 
-    public UsuarioService(UsuarioRepository userAccountRepository, PasswordEncoder passwordEncoder) {
-        this.usuarioRepository = userAccountRepository;
-        this.passwordEncoder = passwordEncoder;
+    public UsuarioService(UsuarioRepository userAccountRepository, PasswordEncoder passwordEncoder, OrganizacaoRepository organizacaoRepository, MilitarRepository militarRepository) {
+        this.usuarioRepository     = userAccountRepository;
+        this.passwordEncoder       = passwordEncoder;
+        this.organizacaoRepository = organizacaoRepository;
+        this.militarRepository     = militarRepository;
     }
 
     public Page<Usuario> getAllUsuarios(Pageable pageble) {
@@ -39,59 +42,50 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("usuário não encontrado. id: " + id));
     }
 
-    public Usuario createUsuario(@RequestBody UsuarioDTO userDetails, Militar militar, Organizacao organizacao) {
+    public Usuario createUsuario(@RequestBody UsuarioDTO usuarioDetails) {
+
+        Militar militar = militarRepository.findById(usuarioDetails.idMilitar())
+            .orElseThrow(() -> new ResourceNotFoundException("Militar não encontrado. id: "+ usuarioDetails.idMilitar()));
+
+        Organizacao organizacao = organizacaoRepository.findById(usuarioDetails.idOrganizacao())
+            .orElseThrow(() -> new ResourceNotFoundException("Organização não encontrada. id: "+ usuarioDetails.idOrganizacao()));
+
+        String passwordHash = passwordEncoder.encode(usuarioDetails.rawPassword());
 
         Usuario usuario = Usuario.builder()
-            .militar(militar)
-            .organizacao(organizacao)
-            .username(userDetails.username())
-            .roles(userDetails.roles())
-            .passwordHash(userDetails.password())
-            .salt(null)
-            .email(userDetails.email())
-            .tentativasFalhasLogin(0)
-            .dataCriacao(LocalDateTime.now())
-            .ativo(userDetails.ativo())
+            .militar              (militar                  )
+            .organizacao          (organizacao              )
+            .username             (usuarioDetails.username())
+            .roles                (usuarioDetails.roles()   )
+            .passwordHash         (passwordHash             )
+            .email                (usuarioDetails.email()   )
+            .tentativasFalhasLogin(0  )
+            .dataCriacao          (LocalDateTime.now()      )
+            .ativo                (usuarioDetails.ativo()   )
             .build();
 
         return usuarioRepository.save(usuario);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Usuario updateUsuario(@PathVariable Long id, @RequestBody UsuarioDTO userDetails, Organizacao organizacao) {
+    public Usuario updateUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDetails) {
 
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("usuário não encontrado. id: " + id));
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado. id: " + id));
+
+        Organizacao organizacao = organizacaoRepository.findById(usuarioDetails.idOrganizacao())
+            .orElseThrow(() -> new ResourceNotFoundException("Organização não encontrada. id: "+ usuarioDetails.idOrganizacao()));
         
-        usuario.setOrganizacao(organizacao           );
-        usuario.setUsername   (userDetails.username());
-        usuario.setEmail      (userDetails.email()   );
-        usuario.setTelefone   (userDetails.telefone());
-        usuario.setAtivo      (userDetails.ativo()   );
+        usuario.setOrganizacao(organizacao              );
+        usuario.setUsername   (usuarioDetails.username());
+        usuario.setEmail      (usuarioDetails.email()   );
+        usuario.setTelefone   (usuarioDetails.telefone());
+        usuario.setAtivo      (usuarioDetails.ativo()   );
 
         return usuarioRepository.save(usuario);
     }
 
     public void deleteUsuario(@PathVariable Long id) {
         usuarioRepository.deleteById(id);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario userAccount = usuarioRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
-
-        return new org.springframework.security.core.userdetails.User(
-                userAccount.getUsername(), 
-                userAccount.getPasswordHash(),  // Usa o passwordHash
-                true,                           // Se a conta está habilitada (true ou false)
-                true,                           // Se a conta não está expirada (true ou false)
-                true,                           // Se as credenciais não estão expiradas (true ou false)
-                true,                           // Se a conta não está bloqueada (true ou false)
-                userAccount.getAuthorities()    // Lista de permissões (authorities)
-        );
-    }
-
-    public boolean checkPassword(String rawPassword, Usuario usuario) {
-        String saltedPassword = rawPassword + usuario.getSalt();
-        return passwordEncoder.matches(saltedPassword, usuario.getPasswordHash());
     }
 }

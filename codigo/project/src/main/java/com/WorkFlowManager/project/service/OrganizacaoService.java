@@ -32,19 +32,10 @@ public class OrganizacaoService {
             .orElseThrow(() -> new ResourceNotFoundException("organizacao não encontrada. id: " + id));
     }
 
-    public Set<Organizacao> getOrganizacoesById(Long[] ids) throws ResourceNotFoundException {
-
-        List<Long> idList = Arrays.asList(ids);
-
-        Set<Organizacao> Organizacoes = new HashSet<>(organizacaoRepository.findAllById(idList));
-
-        return Organizacoes;
-    }
-
     public Organizacao createOrganizacao(@RequestBody OrganizacaoDTO organizacaoDetails) {
         
-        Set<Organizacao> subOrganizacoes = getOrganizacoesById(organizacaoDetails.idsSubOrganizacoes());
-
+        Set<Organizacao> subOrganizacoes = new HashSet<>(organizacaoRepository.findAllById(Arrays.asList(organizacaoDetails.idsSubOrganizacoes())));
+        
         Organizacao novaOrganizacao = Organizacao.builder()
             .subOrganizacoes(subOrganizacoes                )
             .nome           (organizacaoDetails.nome()      )
@@ -67,7 +58,7 @@ public class OrganizacaoService {
         }
 
         List<Organizacao> subOrganizacoesAtuais = organizacaoRepository.findByOrganizacaoSuperior(organizacao);
-        Set<Organizacao> novasSubOrganizacoes = getOrganizacoesById(organizacaoDetails.idsSubOrganizacoes());
+        Set<Organizacao> novasSubOrganizacoes = new HashSet<>(organizacaoRepository.findAllById(Arrays.asList(organizacaoDetails.idsSubOrganizacoes())));
 
         for(Organizacao subOrganizacao : subOrganizacoesAtuais){
             if(!novasSubOrganizacoes.contains(subOrganizacao)){
@@ -88,14 +79,14 @@ public class OrganizacaoService {
         organizacaoRepository.deleteById(id);
     }
 
-    public Set<Organizacao> getTodasSubOrganizacoes(Organizacao organizacaoSuperior) {
+    public Set<Organizacao> getAllSubOrganizacoes(Organizacao organizacaoSuperior) {
 
         Set<Organizacao> subOrganizacoes = new HashSet<>();
         List<Organizacao> subOrganizacoesDiretas = organizacaoRepository.findByOrganizacaoSuperior(organizacaoSuperior);
 
         for (Organizacao subOrganizacao : subOrganizacoesDiretas) {
             subOrganizacoes.add(subOrganizacao);
-            subOrganizacoes.addAll(getTodasSubOrganizacoes(subOrganizacao)); // Recursão para subníveis
+            subOrganizacoes.addAll(getAllSubOrganizacoes(subOrganizacao)); // Recursão para subníveis
         }
 
         return subOrganizacoes;

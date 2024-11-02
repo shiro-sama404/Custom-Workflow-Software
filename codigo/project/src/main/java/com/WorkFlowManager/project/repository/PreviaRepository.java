@@ -1,15 +1,17 @@
 package com.WorkFlowManager.project.repository;
 
-
-import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
+import com.WorkFlowManager.project.enums.PreviaStatus;
 import com.WorkFlowManager.project.model.Previa;
 
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
+
 @Repository
-public interface PreviaRepository extends JpaRepository<Previa, Long> {
+public interface PreviaRepository extends JpaRepository<Previa, Long>, JpaSpecificationExecutor<Previa> {
     
-    Optional<Previa> findByIdEscalaAndIdUserAndRascunho(Long escalaId, Long usuarioId, boolean rascunho);
+    List<Previa> findByIdEscalaAndIdUsuarioAndStatus(Long escalaId, Long usuarioId, PreviaStatus status);
+   List<Previa> findByIdEscala(Long escalaId);
 }

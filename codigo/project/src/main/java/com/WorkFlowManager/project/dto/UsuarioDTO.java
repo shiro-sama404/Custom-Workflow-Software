@@ -15,7 +15,7 @@ public record UsuarioDTO
     Long       idOrganizacao,
     Set<Role>  roles,
     String     username,
-    String     password,
+    String     rawPassword,
     String     email,
     int        telefone,
     boolean    ativo

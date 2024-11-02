@@ -11,7 +11,7 @@ public record RestricaoDTO
 (
     Long      id,
     Long      idMilitar,
-    Long      idUsuario,
+    Long      idUsuarioAutor,
     Long[]    idsEscalasBloqueadas,
     String    razao,
     String    detalhes,
@@ -36,13 +36,13 @@ public record RestricaoDTO
         return restricaoDetails;
     }
 
-    public static RestricaoDTO privateDTO(Restricao restricao, Long[] idsEscalasBloqueadas, Long idMilitar, Long idUsuario){
+    public static RestricaoDTO privateDTO(Restricao restricao, Long[] idsEscalasBloqueadas, Long idMilitar, Long idUsuarioAutor){
 
         RestricaoDTO restricaoDetails = RestricaoDTO.builder()
             .id                  (restricao.getId()           )
             .idsEscalasBloqueadas(idsEscalasBloqueadas        )
             .idMilitar           (idMilitar                   )
-            .idUsuario           (idUsuario                   )
+            .idUsuarioAutor      (idUsuarioAutor              )
             .razao               (restricao.getRazao()        )
             .detalhes            (restricao.getDetalhes()     )
             .dataInicio          (restricao.getDataInicio()   )

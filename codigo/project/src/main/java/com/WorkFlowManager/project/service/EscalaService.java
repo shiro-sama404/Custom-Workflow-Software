@@ -6,6 +6,8 @@ import com.WorkFlowManager.project.model.Escala;
 import com.WorkFlowManager.project.model.Militar;
 import com.WorkFlowManager.project.model.Organizacao;
 import com.WorkFlowManager.project.repository.EscalaRepository;
+import com.WorkFlowManager.project.repository.MilitarRepository;
+import com.WorkFlowManager.project.repository.OrganizacaoRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,38 +21,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Service
 public class EscalaService {
     
-    private final EscalaRepository escalaRepository;
+    private final EscalaRepository      escalaRepository;
+    private final OrganizacaoRepository organizacaoRepository;
+    private final MilitarRepository     militarRepository;
 
-    public EscalaService(EscalaRepository escalaRepository) {
-        this.escalaRepository = escalaRepository;
+    public EscalaService(EscalaRepository escalaRepository, OrganizacaoRepository organizacaoRepository, MilitarRepository militarRepository) {
+        this.escalaRepository      = escalaRepository;
+        this.organizacaoRepository = organizacaoRepository;
+        this.militarRepository     = militarRepository;
     }
 
     public List<Escala> getAllEscalas() {
         return escalaRepository.findAll();
     }
 
-    public Set<Escala> getEscalasById(Long[] ids) throws ResourceNotFoundException {
-
-        List<Long> idList = Arrays.asList(ids);
-
-        Set<Escala> escalas = new HashSet<>(escalaRepository.findAllById(idList));
-
-        return escalas;
-    }
-
     public Escala getEscalaById(@PathVariable Long id) throws ResourceNotFoundException {
         return escalaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Escala não encontrada. id: " + id));
     }
 
-    public Escala createEscala(@RequestBody EscalaDTO escalaDetails, Set<Militar> militares, Organizacao organizacao) {
+    public Escala createEscala(@RequestBody EscalaDTO escalaDetails) {
 
-        Set<Escala> escalasBloqueadas = new HashSet<>();
+        Organizacao organizacao = organizacaoRepository.findById(escalaDetails.idOrganizacao())
+            .orElseThrow(() -> new ResourceNotFoundException("Organização não encontrada. id: " + escalaDetails.idOrganizacao()));
 
-        for(Long idEscalaBloqueada : escalaDetails.idEscalasBloqueadas()){
-            Escala escalaBloqueada = escalaRepository.findById(idEscalaBloqueada)
-            .orElseThrow(() -> new ResourceNotFoundException("Escala não encontrada. id: " + idEscalaBloqueada));
+        Set<Escala> escalasBloqueadas = new HashSet<>(escalaRepository.findAllById(Arrays.asList(escalaDetails.idEscalasBloqueadas())));
 
-            escalasBloqueadas.add(escalaBloqueada);
+        if(escalasBloqueadas.size() != escalaDetails.idEscalasBloqueadas().length){
+            throw new ResourceNotFoundException("Erro na associação de escalas bloqueadas. Uma ou mais escalas não foram encontradas.");
+        }
+
+        Set<Militar> militares = new HashSet<>(militarRepository.findAllById(Arrays.asList(escalaDetails.idMilitares())));
+
+        if(militares.size() != escalaDetails.idMilitares().length){
+            throw new ResourceNotFoundException("Erro na associação de militares. Um ou mais militares não foram encontrados.");
         }
 
         Escala novaEscala = Escala.builder()
@@ -69,12 +72,25 @@ public class EscalaService {
         return escalaRepository.save(novaEscala);
     }
 
-    public Escala updateEscala(@PathVariable Long id, @RequestBody EscalaDTO escalaDetails, Set<Militar> militares, Organizacao organizacao) {
+    public Escala updateEscala(@PathVariable Long id, @RequestBody EscalaDTO escalaDetails) {
 
         Escala escala = escalaRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Escala não encontrada. id: " + id));
 
-        Set<Escala> escalasBloqueadas = getEscalasById(escalaDetails.idEscalasBloqueadas());
+        Organizacao organizacao = organizacaoRepository.findById(escalaDetails.idOrganizacao())
+            .orElseThrow(() -> new ResourceNotFoundException("Organização não encontrada. id: " + escalaDetails.idOrganizacao()));
+
+        Set<Escala> escalasBloqueadas = new HashSet<>(escalaRepository.findAllById(Arrays.asList(escalaDetails.idEscalasBloqueadas())));
+
+        if(escalasBloqueadas.size() != escalaDetails.idEscalasBloqueadas().length){
+            throw new ResourceNotFoundException("Erro na associação de escalas bloqueadas. Uma ou mais escalas não foram encontradas.");
+        }
+
+        Set<Militar> militares = new HashSet<>(militarRepository.findAllById(Arrays.asList(escalaDetails.idMilitares())));
+
+        if(militares.size() != escalaDetails.idMilitares().length){
+            throw new ResourceNotFoundException("Erro na associação de militares. Um ou mais militares não foram encontrados.");
+        }
         
         escala.setOrganizacao      (organizacao                  );
         escala.setMilitares        (militares                    );

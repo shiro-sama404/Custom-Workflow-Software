@@ -1,10 +1,10 @@
 package com.WorkFlowManager.project.enums;
 
 public enum PostoGraduacaoAeronautica {
-    SOLDADO_2ª_CLASSE,
-    TAIFEIRO_2ª_CLASSE,
-    SOLDADO_1ª_CLASSE,
-    TAIFEIRO_1ª_CLASSE,
+    SOLDADO_SEGUNDA_CLASSE,
+    TAIFEIRO_SEGUNDA_CLASSE,
+    SOLDADO_PRIMEIRA_CLASSE,
+    TAIFEIRO_PRIMEIRA_CLASSE,
     TAIFEIRO_MOR,
     CABO,
     TERCEIRO_SARGENTO,

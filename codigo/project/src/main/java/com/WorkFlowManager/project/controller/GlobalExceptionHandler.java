@@ -8,29 +8,32 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
-public class GlobalExceptionController {
+public class GlobalExceptionHandler {
 
     // Captura exceção 404
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleNotFound(NoHandlerFoundException e, Model model) {
-        model.addAttribute("errorName", "Página não encontrada");
-        return "error"; // Nome do arquivo HTML único para erros
+        model.addAttribute("errorName", "Página não encontrada.");
+        model.addAttribute("errorMessage", e.getMessage());
+        return "error";
     }
 
     // Captura IllegalArgumentException (erro 400 - Bad Request)
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleBadRequest(IllegalArgumentException e, Model model) {
-        model.addAttribute("errorName", "Requisição inválida");
-        return "error"; // Nome do arquivo HTML único para erros
+        model.addAttribute("errorName", "Requisição inválida.");
+        model.addAttribute("errorMessage", e.getMessage());
+        return "error";
     }
 
     // Captura qualquer exceção genérica e não mapeada
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleAllExceptions(Exception e, Model model) {
-        model.addAttribute("errorName", "Erro interno do servidor");
-        return "error"; // Nome do arquivo HTML único para erros
+        model.addAttribute("errorName", "Erro interno do servidor.");
+        model.addAttribute("errorMessage", e.getMessage());
+        return "error";
     }
 }

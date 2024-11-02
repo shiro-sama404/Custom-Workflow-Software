@@ -35,17 +35,16 @@ public class Militar {
     @JoinColumn(name = "id_organizacao")
     private Organizacao organizacao;
 
-    private PostoGraduacao postoGraduacao;
+    private String               identidade;
+    private String               nomeCompleto;
+    private String               nomeGuerra;
+    private PostoGraduacao       postoGraduacao;
     private CategoriaHabilitacao habilitacao;
-    private Qas qas;
-
-    private String      identidade;
-    private String      nomeCompleto;
-    private String      nomeGuerra;
-    private LocalDate   dataPromocao;
-    private LocalDate   dataPraca;
-    private LocalDate   dataNascimento;
-    private int         antiguidade;
-    private boolean     cfcCasCao;
-    private boolean     ativo;
+    private Qas                  qas;
+    private LocalDate            dataPromocao;
+    private LocalDate            dataPraca;
+    private LocalDate            dataNascimento;
+    private int                  antiguidade;
+    private boolean              cfcCasCao;
+    private boolean              ativo;
 }

@@ -5,11 +5,9 @@ import com.WorkFlowManager.project.exception.ResourceNotFoundException;
 import com.WorkFlowManager.project.model.Militar;
 import com.WorkFlowManager.project.model.Organizacao;
 import com.WorkFlowManager.project.repository.MilitarRepository;
+import com.WorkFlowManager.project.repository.OrganizacaoRepository;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,30 +16,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Service
 public class MilitarService {
     
-    private final MilitarRepository militarRepository;
+    private final MilitarRepository     militarRepository;
+    private final OrganizacaoRepository organizacaoRepository;
 
-    public MilitarService(MilitarRepository militarRepository) {
-        this.militarRepository = militarRepository;
+    public MilitarService(MilitarRepository militarRepository, OrganizacaoRepository organizacaoRepository) {
+        this.militarRepository     = militarRepository;
+        this.organizacaoRepository = organizacaoRepository;
     }
 
     public List<Militar> getAllMilitares() {
         return militarRepository.findAll();
     }
 
-    public Set<Militar> getMilitaresById(@PathVariable Long[] ids) throws ResourceNotFoundException {
-
-        List<Long> militaresIds = Arrays.asList(ids);
-
-        Set<Militar> Militares = new HashSet<>(militarRepository.findAllById(militaresIds));
-
-        return Militares;
-    }
-
     public Militar getMilitarById(@PathVariable Long id) throws ResourceNotFoundException {
-        return militarRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("militar não encontrada. id: " + id));
+        return militarRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Militar não encontrada. id: " + id));
     }
 
-    public Militar createMilitar(@RequestBody MilitarDTO militarDetails, @RequestBody Organizacao organizacao) {
+    public Militar createMilitar(@RequestBody MilitarDTO militarDetails) {
+
+        Organizacao organizacao = organizacaoRepository.findById(militarDetails.idOrganizacao())
+            .orElseThrow(() -> new ResourceNotFoundException("Organização não encontrada. Id: "+ militarDetails.idOrganizacao()));
         
         Militar novoMilitar = Militar.builder()
             .identidade    (militarDetails.identidade()    )
@@ -62,22 +56,25 @@ public class MilitarService {
         return militarRepository.save(novoMilitar);
     }
 
-    public Militar updateMilitar(@PathVariable Long id, @RequestBody MilitarDTO militarDetails,  @RequestBody Organizacao organizacao) {
+    public Militar updateMilitar(@PathVariable Long id, @RequestBody MilitarDTO militarDetails) {
 
         Militar militar = militarRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("militar não encontrado. id: " + id));
+            .orElseThrow(() -> new ResourceNotFoundException("Militar não encontrado. id: " + id));
+
+        Organizacao organizacao = organizacaoRepository.findById(militarDetails.idOrganizacao())
+            .orElseThrow(() -> new ResourceNotFoundException("Organização não encontrada. Id: "+ militarDetails.idOrganizacao()));
         
+        militar.setOrganizacao   (organizacao                    );
         militar.setIdentidade    (militarDetails.identidade()    );
         militar.setNomeCompleto  (militarDetails.nomeCompleto()  );
         militar.setNomeGuerra    (militarDetails.nomeGuerra()    );
         militar.setPostoGraduacao(militarDetails.postoGraduacao());
-        militar.setQas           (militarDetails.qas()           );
         militar.setHabilitacao   (militarDetails.habilitacao()   );
-        militar.setAntiguidade   (militarDetails.antiguidade()   );
-        militar.setOrganizacao   (organizacao                    );
-        militar.setDataNascimento(militarDetails.dataNascimento());
-        militar.setDataPraca     (militarDetails.dataPraca()     );
+        militar.setQas           (militarDetails.qas()           );
         militar.setDataPromocao  (militarDetails.dataPromocao()  );
+        militar.setDataPraca     (militarDetails.dataPraca()     );
+        militar.setDataNascimento(militarDetails.dataNascimento());
+        militar.setAntiguidade   (militarDetails.antiguidade()   );
         militar.setCfcCasCao     (militarDetails.cfcCasCao()     );
         militar.setAtivo         (militarDetails.ativo()         );
 

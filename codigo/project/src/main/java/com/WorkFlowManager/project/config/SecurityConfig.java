@@ -1,5 +1,7 @@
 package com.WorkFlowManager.project.config;
 
+import com.WorkFlowManager.project.service.AuthenticationService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,28 +14,30 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.WorkFlowManager.project.service.UserAccountService;
-
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
-    private final UserAccountService userAccountService;
+    private final AuthenticationService authenticationService;
 
-    public SecurityConfig(UserAccountService userAccountService) {
-        this.userAccountService = userAccountService;
+    public SecurityConfig(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/register", "/css/**", "/js/**").permitAll() // Permite acesso público à página de login, registro e arquivos estáticos
-                .anyRequest().authenticated() // Exige autenticação para qualquer outra página
-            )
-            .formLogin(form -> form
-                .loginPage("/login") // Define a página de login personalizada
-                .defaultSuccessUrl("/home", true) // Redireciona para /home após login bem-sucedido
+                // Permite acesso público às páginas de informação e arquivos estáticos
+                .requestMatchers("/previa", "/home", "/", "/historico", "/militares", "/restricoes", "/login", "/css/**", "/js/**", "/img/**").permitAll() 
+                // Exige autenticação para qualquer outra página
+                .anyRequest().authenticated()      
+                )
+                .formLogin(form -> form
+                // Define a página de login personalizada
+                .loginPage("/login")
+                // Redireciona para /home após login bem-sucedido           
+                .defaultSuccessUrl("/home", true) 
                 .permitAll()
             )
             .logout(logout -> logout
@@ -47,7 +51,7 @@ public class SecurityConfig {
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userAccountService)
+        auth.userDetailsService(authenticationService)
             .passwordEncoder(passwordEncoder());
     }
 
