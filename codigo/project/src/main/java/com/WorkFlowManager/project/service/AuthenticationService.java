@@ -25,7 +25,6 @@ public class AuthenticationService implements UserDetailsService {
     }
 
     public Long getAuthenticatedUserId() {
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {

@@ -29,7 +29,7 @@ public class Restricao {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long      id;
+    private Long id;
 
     @Builder.Default
     @ManyToMany

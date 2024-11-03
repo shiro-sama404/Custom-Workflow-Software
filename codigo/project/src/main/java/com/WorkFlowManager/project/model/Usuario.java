@@ -40,7 +40,7 @@ public class Usuario {
     private Militar militar;
 
     @ManyToOne
-    @JoinColumn(name = "id_organizacao")
+    @JoinColumn(name = "organizacao_id")
     private Organizacao organizacao;
 
     @ElementCollection(fetch = FetchType.EAGER)
