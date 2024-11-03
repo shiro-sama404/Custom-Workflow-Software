@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PreviaRepository extends JpaRepository<Previa, Long>, JpaSpecificationExecutor<Previa> {
     
-    List<Previa> findByIdEscalaAndIdUsuarioAndStatus(Long escalaId, Long usuarioId, PreviaStatus status);
-   List<Previa> findByIdEscala(Long escalaId);
+    List<Previa> findByEscalaIdAndUsuarioIdAndStatus(Long escalaId, Long usuarioId, PreviaStatus status);
+    List<Previa> findByEscalaId(Long escalaId);
 }

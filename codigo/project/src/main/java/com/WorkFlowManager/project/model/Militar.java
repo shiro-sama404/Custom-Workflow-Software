@@ -13,6 +13,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,18 +31,24 @@ public class Militar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long        id;
+    private Long id;
     
     @ManyToOne
-    @JoinColumn(name = "id_organizacao")
+    @JoinColumn(name = "organizacao_id")
     private Organizacao organizacao;
+
+    @Enumerated(EnumType.STRING)
+    private CategoriaHabilitacao habilitacao;
+    
+    @Enumerated(EnumType.STRING)
+    private PostoGraduacao postoGraduacao;
+
+    @Enumerated(EnumType.STRING)
+    private Qas qas;
 
     private String               identidade;
     private String               nomeCompleto;
     private String               nomeGuerra;
-    private PostoGraduacao       postoGraduacao;
-    private CategoriaHabilitacao habilitacao;
-    private Qas                  qas;
     private LocalDate            dataPromocao;
     private LocalDate            dataPraca;
     private LocalDate            dataNascimento;

@@ -1,27 +1,26 @@
 package com.WorkFlowManager.project.config;
 
-import com.WorkFlowManager.project.service.AuthenticationService;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.WorkFlowManager.project.service.AppUserDetailsService;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
-    private final AuthenticationService authenticationService;
+    private final AppUserDetailsService appUserDetailsService;
+    private final PasswordEncoder       passwordEncoder;
 
-    public SecurityConfig(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
+    public SecurityConfig(AppUserDetailsService appUserDetailsService, PasswordEncoder passwordEncoder) {
+        this.appUserDetailsService = appUserDetailsService;
+        this.passwordEncoder       = passwordEncoder;
     }
 
     @Bean
@@ -48,20 +47,11 @@ public class SecurityConfig {
         
         return http.build();
     }
-
-    @Autowired
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(authenticationService)
-            .passwordEncoder(passwordEncoder());
-    }
-
+    
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder auth = http.getSharedObject(AuthenticationManagerBuilder.class);
+        auth.userDetailsService(appUserDetailsService).passwordEncoder(passwordEncoder);
+        return auth.build();
     }
 }
