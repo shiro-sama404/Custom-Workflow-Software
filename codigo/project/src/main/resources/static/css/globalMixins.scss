@@ -1,0 +1,30 @@
+@import "globalVariables";
+
+@mixin textFormatter($color, $size, $weight, $spacing, $cursor){
+    color               : $color;
+    font-size           : $size;
+    font-family         : $font;
+    font-weight         : $weight;
+    letter-spacing      : $spacing;
+    cursor              : $cursor;
+    text-decoration     : none;
+    user-select         : text;
+    -webkit-user-select : text;
+}
+
+@mixin dimensions($height, $width){
+    height: $height;
+    width: $width;
+}
+
+@mixin align($justify, $align){
+    justify-content : $justify;
+    align-items     : $align;
+}
+
+@mixin flex($flexDirection, $wrap, $justify, $align){
+    @include align($justify, $align);
+    display        : flex;
+    flex-direction : $flexDirection;
+    flex-wrap      : $wrap;
+}

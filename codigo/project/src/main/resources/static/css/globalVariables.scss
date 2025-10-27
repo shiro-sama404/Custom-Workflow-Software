@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+$font : 'Inter', sans-serif;
+
+$dark-black-color  : #1b1b1b;
+$black-color       : #1b1f1d;
+
+$dark-green-color  : #18231D;
+$light-green-color : #192F23;
+
+$white-color       : #FFFFFF;
+$light-gray-color  : #F2F2F2;
+$dark-gray-color   : #383838;
+
+$dark-cyan-color   : #ABC6C9;
+$light-cyan-color  : #F8FCF9;
+
+$primary-color     : #0AD982;
+$blue-color        : #416AFF;
+$purple-color      : #5C51F6;
+$red-color         : #ff1c55;
+
+$dark-box-shadow-color    : #0B18113F;
+$primary-box-shadow-color : #0AD9821F;
+
+$black-filter   : invert(20%) sepia(5%) saturate(8%) hue-rotate(58deg) brightness(95%) contrast(91%);
+$white-filter   : invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+$primary-filter : invert(63%) sepia(31%) saturate(4327%) hue-rotate(111deg) brightness(104%) contrast(92%);

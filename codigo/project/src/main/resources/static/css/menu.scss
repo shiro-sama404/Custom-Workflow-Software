@@ -1,0 +1,117 @@
+@import "global";
+
+#side-menu{
+    @include dimensions(100%, 100%);
+    background-color: var(--bg-color-section);
+    grid-area: nav_menu;
+    box-shadow: var(--box-shadow) 0px .1vw .3vw;
+
+    ul{
+        @include dimensions(100%, 100%);
+        @include flex(column, wrap, flex-start, flex-start);
+        gap: 2vh;
+        padding: 1vh;
+        list-style: none;
+        overflow: hidden;
+
+        li{
+            @include dimensions(fit-content, 100%);
+            @include flex(row, wrap, center, center);
+
+            &:nth-child(1){
+                margin-bottom: 10%;
+                cursor: pointer;
+
+                img{
+                    width: 30%;
+                }
+            }
+
+            &:nth-child(7){
+                margin-top: auto;
+            }
+
+            a, p{
+                @include flex(column, wrap, center, flex-start);
+                @include textFormatter(var(--text-color), clamp(5px, 2vh, 2rem), 400, 1%, pointer);
+                width: 100%;
+                flex: 1;
+                text-decoration: none;
+                padding: 8% 5%;
+                border-radius: .5vh;
+
+                &:hover{
+                    transition: all .1s ease-in;
+                    font-weight: 500;
+                }
+            }
+
+            a:hover{
+                background-color: var(--bg-color-secondary);
+            }
+
+            p{
+                color: $white-color;
+                background-color: $primary-color;
+            }
+
+            #theme-toggle-area{
+                @include flex(row, wrap, flex-start, center);
+                width: 50%;
+                aspect-ratio: 2/1;
+                border-radius: 1vh;
+                box-shadow: var(--box-shadow) 0px .1vw .3vw;
+                cursor: pointer;
+
+                #theme-toggle-button{
+                    @include flex(column, wrap, center, center);
+                    height: 100%;
+                    aspect-ratio: 1/1;
+                    background-color: var(--bg-color-section);
+                    box-shadow: var(--box-shadow) 0px .1vw .3vw;
+                    border-radius: 1vh;
+
+                    .theme-icon{
+                        width: 80%;
+                        aspect-ratio: 1/1;
+                        display: inline;
+                        filter: $primary-filter;
+                    }
+
+                    .theme-icon-hover{
+                        width: 80%;
+                        aspect-ratio: 1/1;
+                        margin: auto;
+                        display: none;
+                        filter: $primary-filter;
+                    }
+                }
+
+                &:hover{
+
+                    #theme-toggle-button{
+                        .theme-icon{
+                            display: none;
+                        }
+
+                        .theme-icon-hover{
+                            display: inline;
+                        }
+                    }
+                }
+            }
+
+            .question-icon{
+                width: 30%;
+                aspect-ratio: 1/1;
+                margin: 5% auto;
+                cursor: pointer;
+                filter: var(--icon-filter);
+
+                &:hover{
+                    filter: $primary-filter;
+                }
+            }
+        }
+    }
+}

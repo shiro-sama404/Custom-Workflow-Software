@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.WorkFlowManager.project.service.AppUserDetailsService;
 
@@ -28,7 +29,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
                 // Permite acesso público às páginas de informação e arquivos estáticos
-                .requestMatchers("/previa", "/home", "/", "/historico", "/militares", "/restricoes", "/login", "/css/**", "/js/**", "/img/**").permitAll() 
+                .requestMatchers("/previa/**", "/home", "/", "/historico/**", "/militares/**", "/restricoes/**", "/login", "/tutorial", "/css/**", "/js/**", "/img/**").permitAll()
                 // Exige autenticação para qualquer outra página
                 .anyRequest().authenticated()      
                 )
@@ -43,7 +44,17 @@ public class SecurityConfig {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()
-            );
+            )
+            // Habilita exceções de mapeamento não encontrado
+            .exceptionHandling(ex -> ex
+                .authenticationEntryPoint((request, response, authException) -> {
+                    // Redireciona à página de login para erros de autenticação
+                    response.sendRedirect("/login");
+                })
+                .accessDeniedPage("/error") // Página genérica para erros de acesso negado
+            )
+            // Permite passar 404 para o controlador
+            .setSharedObject(NoHandlerFoundException.class, null);
         
         return http.build();
     }

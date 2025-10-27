@@ -1,0 +1,13 @@
+<div id="calendar">
+    <div><p>Dom</p></div>
+    <div><p>Seg</p></div>
+    <div><p>Ter</p></div>
+    <div><p>Qua</p></div>
+    <div><p>Qui</p></div>
+    <div><p>Sex</p></div>
+    <div><p>Sáb</p></div>
+    <div><p>Dom</p></div>
+    <div th:each="semana : ${previaMensal.semanas}">
+        <p th:text="${dia.data}"></p>
+    </div>
+</tbody>

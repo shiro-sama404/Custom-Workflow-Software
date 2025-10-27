@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @Controller
 public class AuthenticationController {
@@ -17,6 +19,12 @@ public class AuthenticationController {
     public AuthenticationController(AuthenticationService authenticationService){
         this.authenticationService = authenticationService;
     }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
+    
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UsuarioDTO usuarioDTO) {

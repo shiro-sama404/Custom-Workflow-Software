@@ -1,0 +1,192 @@
+@import "global";
+
+html[data-theme="light"] {
+    --bg-color-1: #{$white-color};
+    --bg-color-2: #{$light-gray-color};
+    --bg-color-3: #{$light-gray-color};
+    --bg-filter-color: #{$light-gray-color};
+    --text-filter-color: #{$dark-gray-color};
+    --bg-input-color : #{$white-color};
+    --text-color: #{$black-color};
+    --box-shadow: #{$dark-box-shadow-color};
+    --border-color: #{$light-gray-color};
+    --icon-filter: #{$black-filter};
+}
+
+html[data-theme="dark"] {
+    --bg-color-1: #{$black-color};
+    --bg-color-2: #{$light-green-color};
+    --bg-color-3: #{$dark-gray-color};
+    --bg-filter-color: #{$dark-gray-color};
+    --text-filter-color: #{$light-gray-color};
+    --bg-input-color : #{$light-green-color};
+    --text-color: #{$white-color};
+    --box-shadow: #{$primary-box-shadow-color};
+    --border-color: #{$dark-cyan-color};
+    --icon-filter: #{$white-filter};
+}
+
+.container-view{
+    @include dimensions(100%, 100%);
+    padding: 5vh;
+    display: grid;
+    grid-template-rows: 2fr 2fr 2fr 1fr;
+    grid-template-columns: 2fr 2fr .75fr .75fr 2.5fr;
+    grid-template-areas:
+    'announce1 announce1 announce5 announce5 login'
+    'announce1 announce1 announce5 announce5 login'
+    'announce2 announce4 announce5 announce5 login'
+    'announce3 announce4 announce6 announce7 login';
+    grid-gap: 1vh;
+
+    .announce{
+        border-radius: 1%;
+
+        &:nth-child(1){
+            grid-area: announce1;
+            background-color: $primary-color;
+        }
+        &:nth-child(2){
+            grid-area: announce2;
+            background-color: $blue-color;
+        }
+        &:nth-child(3){
+            grid-area: announce3;
+            background-color: $blue-color;
+        }
+        &:nth-child(4){
+            grid-area: announce4;
+            background-color: $dark-cyan-color;
+        }
+        &:nth-child(5){
+            grid-area: announce5;
+            background-color: $dark-cyan-color;
+        }
+        &:nth-child(6){
+            grid-area: announce6;
+            background-color: $blue-color;
+        }
+        &:nth-child(7){
+            @include flex(column, wrap, center, center);
+            grid-area: announce7;
+            cursor: pointer;
+            background-color: $primary-color;
+
+            svg{
+                height: 50%;
+                filter: $white-filter;
+            }
+
+            &:hover svg{
+                transition: all .1s ease-in;
+                height: 60%;
+            }
+        }
+    }
+
+    svg{
+        aspect-ratio: 1/1;
+        display: block;
+    }
+}
+
+#login-section{
+    grid-area: login;
+    padding: 1vh 2vh;
+
+    ul{
+        @include dimensions(100%, 100%);
+        @include flex(column, wrap, center, center);
+        gap: 5%;
+        list-style-type: none;
+        
+        li{
+            @include dimensions(5vh, 100%);
+            @include flex(column, wrap, center, center);
+            flex: 1;
+        }
+    }
+    
+    #logo{
+        height: min(5vw, 90px);
+        aspect-ratio: 1/1
+    }
+
+    h1{
+        @include textFormatter($primary-color, min(6vw, 90px), 500, max(-1%, -1px), default);
+    }
+
+    p{
+        @include dimensions(10%, 100%);
+        @include textFormatter(var(--text-color), min(1.5vw, 20px), 200, 1%, default);
+        text-align: center;
+        margin-top: 2%;
+        a{
+            @include textFormatter($primary-color, min(1.5vw, 20px), 300, 1%, pointer);
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .input-field{
+        @include dimensions(20%, 100%);
+        @include flex(row, wrap, flex-end, center);
+        margin-top: 5%;
+        gap: 5%;
+
+        input{
+            @include dimensions(100%, 70%);
+            @include textFormatter(var(--text-color), min(1.5vw, 20px), 300, 1%, text);
+            flex: .85;
+            padding-left: 5%;
+            border: none;
+            border-radius: .5vh;
+            background-color: var(--bg-input-color);
+            box-shadow: var(--box-shadow) 0px .1vw .3vw;
+    
+            &:focus{
+                outline: none;
+            }
+    
+            &::placeholder {
+                color: $dark-cyan-color;
+            }
+        }
+
+        .field-toggle{
+            @include flex(row, wrap, center, center);
+            height: 100%;
+            aspect-ratio: 1/1;
+            cursor: pointer;
+            border-radius: .5vh;
+            background-color: light-dark($white-color, $light-green-color);
+            box-shadow: var(--box-shadow) 0px .1vw .3vw;
+
+            svg{
+                height: 60%;
+                filter: var(--icon-filter);
+            }
+
+            &:hover svg{
+                filter: $primary-filter;
+            }
+        }
+    }
+
+    button{
+        @include dimensions(40%, 70%);
+        @include flex(row, wrap, center, center);
+        @include textFormatter($white-color, min(2vw, 25px), 400, .1vh, pointer);
+        margin-bottom: 20%;
+        background-color: $primary-color;
+        border: none;
+        border-radius: .5vh;
+
+        &:hover{
+            transition: all .1s ease-in;
+            letter-spacing: .2vh;
+            font-weight: 500;
+        }
+    }
+}

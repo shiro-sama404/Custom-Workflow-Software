@@ -1,0 +1,229 @@
+@import "menu";
+
+html[data-theme="light"] {
+    --bg-color-1: #{$white-color};
+    --bg-color-2: #{$light-gray-color};
+    --bg-color-3: #{$light-gray-color};
+    --bg-filter-color: #{$light-gray-color};
+    --text-filter-color: #{$dark-gray-color};
+    --bg-input-color : #{$white-color};
+    --text-color: #{$black-color};
+    --box-shadow: #{$dark-box-shadow-color};
+    --border-color: #{$light-gray-color};
+    --icon-filter: #{$black-filter};
+}
+
+html[data-theme="dark"] {
+    --bg-color-1: #{$black-color};
+    --bg-color-2: #{$light-green-color};
+    --bg-color-3: #{$dark-gray-color};
+    --bg-filter-color: #{$dark-gray-color};
+    --text-filter-color: #{$light-gray-color};
+    --bg-input-color : #{$light-green-color};
+    --text-color: #{$white-color};
+    --box-shadow: #{$primary-box-shadow-color};
+    --border-color: #{$dark-cyan-color};
+    --icon-filter: #{$white-filter};
+}
+
+.container-view{
+    @include dimensions(100vh, 100vw);
+    display: grid;
+    grid-template-rows: 8vh 1fr;
+    grid-template-columns: 10vw 1fr;
+    gap: 1vh;
+    grid-template-areas: 
+    'nav_menu header'
+    'nav_menu content';
+    padding: 0px 1vh 0px 0px;
+    background-color: var(--bg-input-color)
+}
+
+header{
+    @include flex(column, wrap, center, center);
+    grid-area: header;
+    position: relative;
+
+    section{
+        @include flex(row, wrap, flex-end, center);
+        background-color: var(--bg-color-1);
+        box-shadow: var(--box-shadow) 0px .1vw .3vw;
+    }
+
+    #search-section{
+        @include dimensions(100%, 100%);
+        padding: .5vh 1vh;
+        border-radius: 1vh;
+
+        #search-area{
+            @include dimensions(80%, 40%);
+            @include flex(row, wrap, center, center);
+            padding-left: 1vh;
+            margin-right: 25%;
+            border: .1vh solid var(--border-color);
+            border-radius: 1vh;
+            background-color: var(--bg-input-color);
+            overflow:hidden;
+
+            @media (prefers-color-scheme: light) {
+                box-shadow: var(--box-shadow) 0px .1vw .3vw;
+            }
+
+            input{
+                @include dimensions(100%, 80%);
+                margin: 0;
+                flex: 1;
+                font-size: min(3vh, 1rem);
+                color: var(--text-color);
+                border: none;
+                background-color: var(--bg-input-color);
+
+                &:focus{
+                    outline: none;
+                }
+            }
+
+            .search-area-btn{
+                @include flex(row, wrap, center, center);
+                height: 100%;
+                aspect-ratio: 1/1;
+                cursor: pointer;
+                background-color: var(--bg-color-3);
+
+                svg{
+                    height: 50%;
+                    aspect-ratio: 1/1;
+                    display: block;
+                    filter: var(--icon-filter);
+                }
+
+                &:hover{
+                    background-color: $primary-color;
+                    svg{
+                        filter: $white-filter;
+                    }
+                }
+            }
+
+            &:hover{
+                border-color: $primary-color;
+            }
+        }
+
+        #user-img-container{
+            height: 100%;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            border-radius: 1vh;
+
+            img{
+                @include dimensions(100%, 100%);
+                top: 50%;
+                display: block;
+                margin: auto;
+                object-fit: cover;
+                cursor: pointer;
+                transition: transform 0.1s ease-in-out;
+
+                &:hover{
+                    transform: scale(1.2);
+                }
+            }
+        }
+    }
+
+    #filter-section{
+        @include dimensions(min(fit-content, 200%), 100%);
+        @include flex(column, wrap, space-between, flex-start);
+        gap: 2vh;
+        padding: 1vh;
+        position: absolute;
+        z-index: 2;
+        top: 90%;
+
+        #filter-menu{
+            @include dimensions(30%, 100%);
+            @include flex(row, wrap, flex-start, center);
+            gap: 1vh;
+
+            input{
+                @include dimensions(5vh, 20%);
+                @include textFormatter(var(--text-color), min(1rem, 3vh), 400, .1vh, text);
+                padding-left: 1vh;
+                outline: none;
+                border: .1vh solid var(--border-color);
+                border-radius: .5vh;
+                background-color: var(--bg-input-color);
+
+                &:hover{
+                    border-color: $primary-color;
+                }
+
+            }
+
+            .filter-btn{
+                @include dimensions(5vh, 10%);
+                @include textFormatter($white-color, min(1rem, 3vh), 400, .1vh, pointer);
+                margin-left: auto;
+                outline: none;
+                border: none;
+                border-radius: .5vh;
+                background-color: $primary-color;
+
+                &:hover{
+                    transition: all .1s ease-in;
+                    letter-spacing: .2vh;
+                    font-weight: 500;
+                }
+            }
+        }
+
+        #filtered{
+            @include dimensions(fit-content, 100%);
+            @include flex (row, wrap, flex-start, flex-start);
+            max-height: 20vh;
+            gap: 1vh;
+            display: none;
+            overflow-y: auto;
+
+            .filter{
+                @include dimensions(4vh, auto);
+                padding: .5vh;
+                color: var(--text-filter-color);
+                border-radius: 1vh;
+                background-color: var(--bg-filter-color);
+                cursor: pointer;
+                vertical-align: center;
+                font-size: min(1rem, 3vh);
+
+                &:hover{
+                    color: $white-color;
+                    background-color: $red-color;
+                }
+            }
+        }
+    }
+}
+
+#result-container{
+    @include dimensions(100%, 100%);
+    @include flex(column, nowrap, flex-start, center);
+    grid-area: content;
+    border-top-left-radius: 1vh;
+    border-top-right-radius: 1vh;
+    background-color: var(--bg-color-1);
+    box-shadow: var(--box-shadow) 0px .1vw .3vw;
+    overflow-y: auto;
+
+    div{
+        width: 100%;
+        padding: 1rem;
+        border-bottom: .5vh solid var(--border-color);
+        color: var(--text-color);
+        margin-bottom: 1rem;
+        overflow-wrap: break-word;
+        white-space: normal;
+        text-align: justify;
+        line-height: 1.6;
+    }
+}

@@ -1,0 +1,28 @@
+@import "globalMixins";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: $font;
+}
+
+::-webkit-scrollbar {
+    height: 1vh;
+    width: 1vh;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10vh;
+    background: var(--bg-color-2);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10vh;
+    background: $blue-color;
+}
+
+body{
+    @include dimensions(100vh, 100vw);
+    overflow: hidden;
+}

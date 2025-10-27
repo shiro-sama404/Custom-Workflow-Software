@@ -1,6 +1,8 @@
 package com.WorkFlowManager.project.service;
 
+import com.WorkFlowManager.project.Specifications.PreviaSpecification;
 import com.WorkFlowManager.project.dto.PreviaDTO;
+import com.WorkFlowManager.project.dto.PreviaFilterDTO;
 import com.WorkFlowManager.project.exception.ResourceNotFoundException;
 import com.WorkFlowManager.project.model.Escala;
 import com.WorkFlowManager.project.model.Militar;
@@ -11,7 +13,6 @@ import com.WorkFlowManager.project.repository.MilitarRepository;
 import com.WorkFlowManager.project.repository.PreviaRepository;
 import com.WorkFlowManager.project.repository.UsuarioRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,29 +70,13 @@ public class PreviaService {
         return PreviaDTO.publicDTO(previa);
     }
 
-    private Specification<Previa> byEscalaId(Long escalaId) {
-        return (root, query, builder) -> builder.equal(root.get("idEscala"), escalaId);
-    }
+    public List<PreviaDTO> getPreviaByFilter(PreviaFilterDTO filter) {
 
-    private Specification<Previa> byDataInicio(LocalDate dataInicio) {
-        return (root, query, builder) -> builder.greaterThanOrEqualTo(root.get("dataInicio"), dataInicio);
-    }
-
-    private Specification<Previa> byDataFim(LocalDate dataFim) {
-        return (root, query, builder) -> builder.lessThanOrEqualTo(root.get("dataFim"), dataFim);
-    }
-
-    public List<PreviaDTO> getPreviaByEscala(Long escalaId, PreviaDTO filter) {
-
-        Specification<Previa> spec = Specification.where(byEscalaId(escalaId));
-
-        if (filter.dataInicio() != null) {
-            spec = spec.and(byDataInicio(filter.dataInicio()));
-        }
-        if (filter.dataFim() != null) {
-            spec = spec.and(byDataFim(filter.dataFim()));
+        if(!PreviaFilterDTO.validate(filter)){
+            return null;
         }
 
+        Specification<Previa> spec = PreviaSpecification.filterByPrevia(filter);
         List<Previa> previa = previaRepository.findAll(spec);
 
         return previa

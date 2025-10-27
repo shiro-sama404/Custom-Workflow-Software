@@ -1,0 +1,62 @@
+<nav th:fragment="menu" id="side-menu">
+    <ul>
+        <li>
+            <img src="/img/Logo.svg" alt="Logo" id="logo">
+        </li>
+
+        <li th:if="${currentPage != 'previa'}">
+            <a href="/previa">Prévia</a>
+        </li>
+        <li th:if="${currentPage == 'previa'}">
+            <p>Prévia</p>
+        </li>
+
+
+        <li th:if="${currentPage != 'restricoes'}">
+            <a href="/restricoes">Restrições</a>
+        </li>
+        <li th:if="${currentPage == 'restricoes'}">
+            <p>Restrições</p>
+        </li>
+        
+        <li th:if="${currentPage != 'militares'}">
+            <a href="/militares">Militares</a>
+        </li>
+        <li th:if="${currentPage == 'militares'}">
+            <p>Militares</p>
+        </li>
+
+        <li th:if="${currentPage != 'historico'}">
+            <a href="/historico">Histórico</a>
+        </li>
+        <li th:if="${currentPage == 'historico'}">
+            <p>Histórico</p>
+        </li>
+
+        <li th:if="${currentPage != 'editar'}">
+            <a href="/editar">Editar</a>
+        </li>
+        <li th:if="${currentPage == 'editar'}">
+            <p>Editar</p>
+        </li>
+
+        <li>
+            <div id="theme-toggle-area">
+                <div id="theme-toggle-button">
+                    <svg class="theme-icon">
+                        <use xlink:href="#icon-brightness-high"></use>
+                    </svg>
+                    <svg class="theme-icon-hover">
+                        <use xlink:href="#icon-brightness-high-fill"></use>
+                    </svg>
+                </div>
+            </div>
+        </li>
+
+        <li>
+            <svg th:onclick="|location.href='@{/tutorial}'|" class="question-icon">
+                <use xlink:href="#icon-question-square"></use>
+            </svg>
+        </li>
+    </ul>
+</nav>
